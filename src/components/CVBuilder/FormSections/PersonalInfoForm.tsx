@@ -30,64 +30,30 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, setC
       <CardContent className="space-y-4">
         <div>
           <Label htmlFor="fullName">Full Name</Label>
-          <Input
-            id="fullName"
-            value={cvData.personalInfo.fullName}
-            onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-            placeholder="John Doe"
-          />
+          <Input id="fullName" value={cvData.personalInfo.fullName} onChange={(e) => updatePersonalInfo("fullName", e.target.value)} placeholder="Fufufafa" />
         </div>
         <div>
           <Label htmlFor="address">Address</Label>
-          <Textarea
-            id="address"
-            value={cvData.personalInfo.address}
-            onChange={(e) => updatePersonalInfo('address', e.target.value)}
-            placeholder="123 Main St, City, State 12345"
-          />
+          <Textarea id="address" value={cvData.personalInfo.address} onChange={(e) => updatePersonalInfo("address", e.target.value)} placeholder="saya akan pergi ke solo menjadi rakyat biasa" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={cvData.personalInfo.phone}
-              onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-              placeholder="+1 (555) 123-4567"
-            />
+            <Input id="phone" type="tel" value={cvData.personalInfo.phone} onChange={(e) => updatePersonalInfo("phone", e.target.value)} placeholder="+6281117042207" />
           </div>
           <div>
             <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={cvData.personalInfo.email}
-              onChange={(e) => updatePersonalInfo('email', e.target.value)}
-              placeholder="john@example.com"
-            />
+            <Input id="email" type="email" value={cvData.personalInfo.email} onChange={(e) => updatePersonalInfo("email", e.target.value)} placeholder="fufufafa@gmail.com" />
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="linkedin">LinkedIn</Label>
-            <Input
-              id="linkedin"
-              type="url"
-              value={cvData.personalInfo.linkedin}
-              onChange={(e) => updatePersonalInfo('linkedin', e.target.value)}
-              placeholder="https://linkedin.com/in/johndoe"
-            />
+            <Input id="linkedin" type="url" value={cvData.personalInfo.linkedin} onChange={(e) => updatePersonalInfo("linkedin", e.target.value)} placeholder="https://linkedin.com/in/fufufafa" />
           </div>
           <div>
             <Label htmlFor="github">GitHub / Website</Label>
-            <Input
-              id="github"
-              type="url"
-              value={cvData.personalInfo.github}
-              onChange={(e) => updatePersonalInfo('github', e.target.value)}
-              placeholder="https://github.com/johndoe"
-            />
+            <Input id="github" type="url" value={cvData.personalInfo.github} onChange={(e) => updatePersonalInfo("github", e.target.value)} placeholder="https://github.com/fufufafa" />
           </div>
         </div>
       </CardContent>

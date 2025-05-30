@@ -72,7 +72,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, setCVData 
                 <Input
                   value={education.institution}
                   onChange={(e) => updateEducation(education.id, 'institution', e.target.value)}
-                  placeholder="University of Example"
+                  placeholder="Institut Teknologi Peternakan Lele"
                 />
               </div>
               <div>
@@ -80,7 +80,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, setCVData 
                 <Input
                   value={education.degree}
                   onChange={(e) => updateEducation(education.id, 'degree', e.target.value)}
-                  placeholder="Bachelor of Science in Computer Science"
+                  placeholder="fakultas teknologi kayu (FAKYU)"
                 />
               </div>
             </div>
@@ -106,7 +106,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, setCVData 
                 <Input
                   value={education.gpa}
                   onChange={(e) => updateEducation(education.id, 'gpa', e.target.value)}
-                  placeholder="3.8"
+                  placeholder="2.3"
                 />
               </div>
             </div>

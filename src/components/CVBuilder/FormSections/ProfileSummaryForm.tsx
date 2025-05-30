@@ -29,7 +29,7 @@ export const ProfileSummaryForm: React.FC<ProfileSummaryFormProps> = ({ cvData, 
           id="profileSummary"
           value={cvData.profileSummary}
           onChange={(e) => updateProfileSummary(e.target.value)}
-          placeholder="Write a brief summary of your professional background and key achievements..."
+          placeholder="Insya Allah akan terbuka 19 juta lapangan pekerjaan untuk generasi muda dan perempuan, 5 juta di anatranya adalah green jobs..."
           className="min-h-[100px]"
         />
       </CardContent>

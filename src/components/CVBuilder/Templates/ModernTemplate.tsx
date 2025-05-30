@@ -1,49 +1,146 @@
-
-import React from 'react';
-import { CVData } from '@/types/cv';
+import React from "react";
+import { CVData } from "@/types/cv";
 
 interface ModernTemplateProps {
   cvData: CVData;
   setCVData: React.Dispatch<React.SetStateAction<CVData>>;
 }
 
-export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
+export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData, setCVData }) => {
   const { personalInfo, profileSummary, education, workExperience, hardSkills, softSkills, certifications, projects, organizations, languages, references } = cvData;
 
+  const handlePersonalInfoChange = (field: keyof typeof personalInfo, value: string) => {
+    setCVData((prev) => ({
+      ...prev,
+      personalInfo: {
+        ...prev.personalInfo,
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleProfileSummaryChange = (value: string) => {
+    setCVData((prev) => ({
+      ...prev,
+      profileSummary: value,
+    }));
+  };
+
+  const handleWorkExperienceChange = (id: string, field: string, value: string) => {
+    setCVData((prev) => ({
+      ...prev,
+      workExperience: prev.workExperience.map((exp) => (exp.id === id ? { ...exp, [field]: value } : exp)),
+    }));
+  };
+
+  const handleEducationChange = (id: string, field: string, value: string) => {
+    setCVData((prev) => ({
+      ...prev,
+      education: prev.education.map((edu) => (edu.id === id ? { ...edu, [field]: value } : edu)),
+    }));
+  };
+
+  const handleSkillsChange = (type: "hardSkills" | "softSkills", value: string) => {
+    setCVData((prev) => ({
+      ...prev,
+      [type]: value.split(",").map((skill) => skill.trim()),
+    }));
+  };
+
+  const handleSectionHeadingChange = (section: string, value: string) => {
+    setCVData((prev) => ({
+      ...prev,
+      sectionHeadings: {
+        ...prev.sectionHeadings,
+        [section]: value,
+      },
+    }));
+  };
+
   return (
-    <div className="bg-white text-gray-800 p-8 max-w-4xl mx-auto font-sans print:shadow-none">
+    <div className="bg-white text-gray-900 p-8 max-w-4xl mx-auto font-sans print:shadow-none">
       {/* Header */}
       <div className="bg-blue-600 text-white p-6 -m-8 mb-8 rounded-none">
-        <h1 className="text-4xl font-bold mb-3">{personalInfo.fullName || 'Your Name'}</h1>
+        <h1 contentEditable suppressContentEditableWarning onBlur={(e) => handlePersonalInfoChange("fullName", e.currentTarget.textContent || "")} className="text-4xl font-bold mb-3 outline-none hover:bg-blue-500">
+          {personalInfo.fullName || "Your Name"}
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-          {personalInfo.address && <p>{personalInfo.address}</p>}
-          {personalInfo.phone && <p>{personalInfo.phone}</p>}
-          {personalInfo.email && <p>{personalInfo.email}</p>}
-          {personalInfo.linkedin && <p>{personalInfo.linkedin}</p>}
-          {personalInfo.github && <p>{personalInfo.github}</p>}
+          <p contentEditable suppressContentEditableWarning onBlur={(e) => handlePersonalInfoChange("address", e.currentTarget.textContent || "")} className="outline-none hover:bg-blue-500">
+            {personalInfo.address || "Your Address"}
+          </p>
+          <p contentEditable suppressContentEditableWarning onBlur={(e) => handlePersonalInfoChange("phone", e.currentTarget.textContent || "")} className="outline-none hover:bg-blue-500">
+            {personalInfo.phone || "Your Phone"}
+          </p>
+          <p contentEditable suppressContentEditableWarning onBlur={(e) => handlePersonalInfoChange("email", e.currentTarget.textContent || "")} className="outline-none hover:bg-blue-500">
+            {personalInfo.email || "Your Email"}
+          </p>
+          <p contentEditable suppressContentEditableWarning onBlur={(e) => handlePersonalInfoChange("linkedin", e.currentTarget.textContent || "")} className="outline-none hover:bg-blue-500">
+            {personalInfo.linkedin || "Your LinkedIn"}
+          </p>
+          <p contentEditable suppressContentEditableWarning onBlur={(e) => handlePersonalInfoChange("github", e.currentTarget.textContent || "")} className="outline-none hover:bg-blue-500">
+            {personalInfo.github || "Your GitHub"}
+          </p>
         </div>
       </div>
 
       {/* Profile Summary */}
-      {profileSummary && (
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Profile</h2>
-          <p className="text-gray-700 leading-relaxed">{profileSummary}</p>
-        </div>
-      )}
+      <div className="mb-8">
+        <h2
+          contentEditable
+          suppressContentEditableWarning
+          onBlur={(e) => handleSectionHeadingChange("profile", e.currentTarget.textContent || "")}
+          className="text-2xl font-bold mb-4 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+        >
+          {cvData.sectionHeadings?.profile || "Profile"}
+        </h2>
+        <p contentEditable suppressContentEditableWarning onBlur={(e) => handleProfileSummaryChange(e.currentTarget.textContent || "")} className="text-gray-700 leading-relaxed text-center outline-none hover:bg-gray-100">
+          {profileSummary || "Your profile summary"}
+        </p>
+      </div>
 
       {/* Work Experience */}
       {workExperience.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Experience</h2>
+          <h2
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => handleSectionHeadingChange("experience", e.currentTarget.textContent || "")}
+            className="text-2xl font-bold mb-4 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+          >
+            {cvData.sectionHeadings?.experience || "Professional Experience"}
+          </h2>
           {workExperience.map((exp) => (
             <div key={exp.id} className="mb-6 bg-gray-50 p-4 rounded-lg">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-bold text-gray-800">{exp.position}</h3>
-                <span className="text-blue-600 font-medium">{exp.startDate} - {exp.endDate}</span>
+                <h3 contentEditable suppressContentEditableWarning onBlur={(e) => handleWorkExperienceChange(exp.id, "position", e.currentTarget.textContent || "")} className="text-xl font-bold text-gray-800 outline-none hover:bg-gray-200">
+                  {exp.position}
+                </h3>
+                <div className="flex gap-2">
+                  <span contentEditable suppressContentEditableWarning onBlur={(e) => handleWorkExperienceChange(exp.id, "startDate", e.currentTarget.textContent || "")} className="text-blue-600 font-medium outline-none hover:bg-gray-200">
+                    {exp.startDate}
+                  </span>
+                  <span> - </span>
+                  <span contentEditable suppressContentEditableWarning onBlur={(e) => handleWorkExperienceChange(exp.id, "endDate", e.currentTarget.textContent || "")} className="text-blue-600 font-medium outline-none hover:bg-gray-200">
+                    {exp.endDate}
+                  </span>
+                </div>
               </div>
-              <p className="text-lg text-blue-600 font-medium mb-3">{exp.company}</p>
-              <div className="text-gray-700 whitespace-pre-line">{exp.description}</div>
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleWorkExperienceChange(exp.id, "company", e.currentTarget.textContent || "")}
+                className="text-lg text-blue-600 font-medium mb-3 outline-none hover:bg-gray-200"
+              >
+                {exp.company}
+              </p>
+              <div
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleWorkExperienceChange(exp.id, "description", e.currentTarget.textContent || "")}
+                className="text-gray-700 whitespace-pre-line outline-none hover:bg-gray-200"
+              >
+                {exp.description}
+              </div>
             </div>
           ))}
         </div>
@@ -55,14 +152,37 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
           {/* Education */}
           {education.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Education</h2>
+              <h2
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleSectionHeadingChange("education", e.currentTarget.textContent || "")}
+                className="text-2xl font-bold mb-4 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+              >
+                {cvData.sectionHeadings?.education || "Education"}
+              </h2>
               {education.map((edu) => (
                 <div key={edu.id} className="mb-4 bg-gray-50 p-4 rounded-lg">
-                  <h3 className="text-lg font-bold text-gray-800">{edu.degree}</h3>
-                  <p className="text-blue-600 font-medium">{edu.institution}</p>
+                  <h3 contentEditable suppressContentEditableWarning onBlur={(e) => handleEducationChange(edu.id, "degree", e.currentTarget.textContent || "")} className="text-lg font-bold text-gray-800 outline-none hover:bg-gray-200">
+                    {edu.degree}
+                  </h3>
+                  <p contentEditable suppressContentEditableWarning onBlur={(e) => handleEducationChange(edu.id, "institution", e.currentTarget.textContent || "")} className="text-blue-600 font-medium outline-none hover:bg-gray-200">
+                    {edu.institution}
+                  </p>
                   <div className="flex justify-between text-sm text-gray-600 mt-1">
-                    <span>{edu.startYear} - {edu.endYear}</span>
-                    {edu.gpa && <span>GPA: {edu.gpa}</span>}
+                    <div className="flex gap-2">
+                      <span contentEditable suppressContentEditableWarning onBlur={(e) => handleEducationChange(edu.id, "startYear", e.currentTarget.textContent || "")} className="outline-none hover:bg-gray-200">
+                        {edu.startYear}
+                      </span>
+                      <span> - </span>
+                      <span contentEditable suppressContentEditableWarning onBlur={(e) => handleEducationChange(edu.id, "endYear", e.currentTarget.textContent || "")} className="outline-none hover:bg-gray-200">
+                        {edu.endYear}
+                      </span>
+                    </div>
+                    {edu.gpa && (
+                      <span contentEditable suppressContentEditableWarning onBlur={(e) => handleEducationChange(edu.id, "gpa", e.currentTarget.textContent || "")} className="outline-none hover:bg-gray-200">
+                        GPA: {edu.gpa}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -72,7 +192,14 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
           {/* Projects */}
           {projects.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Projects</h2>
+              <h2
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleSectionHeadingChange("projects", e.currentTarget.textContent || "")}
+                className="text-2xl font-bold mb-4 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+              >
+                {cvData.sectionHeadings?.projects || "Notable Projects"}
+              </h2>
               {projects.map((project) => (
                 <div key={project.id} className="mb-4 bg-gray-50 p-4 rounded-lg">
                   <h3 className="text-lg font-bold text-gray-800">{project.title}</h3>
@@ -91,7 +218,14 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
           {/* Skills */}
           {(hardSkills.length > 0 || softSkills.length > 0) && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Skills</h2>
+              <h2
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleSectionHeadingChange("skills", e.currentTarget.textContent || "")}
+                className="text-2xl font-bold mb-4 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+              >
+                {cvData.sectionHeadings?.skills || "Skills & Competencies"}
+              </h2>
               {hardSkills.length > 0 && (
                 <div className="mb-4">
                   <h3 className="font-bold text-gray-800 mb-2">Technical Skills</h3>
@@ -122,7 +256,14 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
           {/* Certifications */}
           {certifications.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Certifications</h2>
+              <h2
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleSectionHeadingChange("certifications", e.currentTarget.textContent || "")}
+                className="text-xl font-bold mb-3 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+              >
+                {cvData.sectionHeadings?.certifications || "Certifications"}
+              </h2>
               {certifications.map((cert) => (
                 <div key={cert.id} className="mb-3 bg-gray-50 p-3 rounded-lg">
                   <div className="flex justify-between items-start">
@@ -138,7 +279,14 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
           {/* Languages */}
           {languages.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Languages</h2>
+              <h2
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleSectionHeadingChange("languages", e.currentTarget.textContent || "")}
+                className="text-xl font-bold mb-3 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+              >
+                {cvData.sectionHeadings?.languages || "Languages"}
+              </h2>
               <div className="space-y-2">
                 {languages.map((lang) => (
                   <div key={lang.id} className="flex justify-between bg-gray-50 p-2 rounded">
@@ -153,12 +301,21 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
           {/* Organizations */}
           {organizations.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">Activities</h2>
+              <h2
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => handleSectionHeadingChange("organizations", e.currentTarget.textContent || "")}
+                className="text-xl font-bold mb-3 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+              >
+                {cvData.sectionHeadings?.organizations || "Professional Activities"}
+              </h2>
               {organizations.map((org) => (
                 <div key={org.id} className="mb-3 bg-gray-50 p-3 rounded-lg">
                   <div className="flex justify-between items-start mb-1">
                     <h3 className="font-bold text-gray-800">{org.role}</h3>
-                    <span className="text-blue-600 text-sm">{org.startDate} - {org.endDate}</span>
+                    <span className="text-blue-600 text-sm">
+                      {org.startDate} - {org.endDate}
+                    </span>
                   </div>
                   <p className="text-blue-600 font-medium text-sm mb-1">{org.name}</p>
                   <p className="text-gray-600 text-sm">{org.activities}</p>
@@ -172,7 +329,14 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ cvData }) => {
       {/* References */}
       {references.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-blue-600 mb-3 border-b-2 border-blue-200 pb-2">References</h2>
+          <h2
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => handleSectionHeadingChange("references", e.currentTarget.textContent || "")}
+            className="text-xl font-bold mb-3 text-center border-b-2 border-blue-500 pb-2 outline-none hover:bg-gray-100"
+          >
+            {cvData.sectionHeadings?.references || "References"}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {references.map((ref) => (
               <div key={ref.id} className="bg-gray-50 p-4 rounded-lg">

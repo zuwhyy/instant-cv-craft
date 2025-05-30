@@ -73,7 +73,7 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ cvData, 
                 <Input
                   value={experience.company}
                   onChange={(e) => updateWorkExperience(experience.id, 'company', e.target.value)}
-                  placeholder="Acme Corporation"
+                  placeholder="PT. Kumogakure"
                 />
               </div>
               <div>
@@ -81,7 +81,7 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ cvData, 
                 <Input
                   value={experience.position}
                   onChange={(e) => updateWorkExperience(experience.id, 'position', e.target.value)}
-                  placeholder="Senior Software Engineer"
+                  placeholder="Koruptor"
                 />
               </div>
             </div>

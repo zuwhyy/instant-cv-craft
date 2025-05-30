@@ -78,7 +78,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, setCVData }) => 
               value={newHardSkill}
               onChange={(e) => setNewHardSkill(e.target.value)}
               onKeyPress={handleHardSkillKeyPress}
-              placeholder="e.g., JavaScript, Python, AWS"
+              placeholder="e.g., Mancing, Main Game, Main Tiktok"
               className="flex-1"
             />
             <Button onClick={addHardSkill} size="sm">
@@ -105,7 +105,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, setCVData }) => 
               value={newSoftSkill}
               onChange={(e) => setNewSoftSkill(e.target.value)}
               onKeyPress={handleSoftSkillKeyPress}
-              placeholder="e.g., Leadership, Communication, Problem Solving"
+              placeholder="e.g., Soft Spoken, Soft Listening, Communication Less"
               className="flex-1"
             />
             <Button onClick={addSoftSkill} size="sm">
