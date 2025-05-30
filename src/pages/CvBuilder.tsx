@@ -2,8 +2,8 @@
 import React from 'react';
 import { CVBuilder } from '@/components/CVBuilder/CVBuilder';
 
-const Index = () => {
+const CvBuilder = () => {
   return <CVBuilder />;
 };
 
-export default Index;
+export default CvBuilder;
